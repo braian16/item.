@@ -1,0 +1,55 @@
+class Item {
+    private $id;
+    private $nome;
+    private $preco;
+
+    public function __construct($id, $nome, $preco) {
+        $this->id = $id;
+        $this->nome = $nome;
+        $this->preco = $preco;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getNome() {
+        return $this->nome;
+    }
+
+    public function getPreco() {
+        return $this->preco;
+    }
+
+    public function toArray() {
+        return array('id' => $this->id, 'nome' => $this->nome, 'preco' => $this->preco);
+    }
+}
+<?php
+
+class ItemController {
+    private $itens;
+
+    public function __construct() {
+        $this->itens = [];
+    }
+
+    public function criarItem($nome, $preco) {
+        $novoItem = new Item(count($this->itens) + 1, $nome, $preco);
+        $this->itens[] = $novoItem;
+        return $novoItem;
+    }
+
+    public function obterItemPorId($itemId) {
+        foreach ($this->itens as $item) {
+            if ($item->getId() == $itemId) {
+                return $item;
+            }
+        }
+        return null;
+    }
+
+    public function obterTodosOsItens() {
+        return $this->itens;
+    }
+}
